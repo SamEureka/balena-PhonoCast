@@ -1,0 +1,7 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:buster
+
+RUN apt-get install -y icecast2
+
+COPY icecast.xml /icecast_config/icecast.xml
+
+CMD ["icecast", "-c", "/icecast_config/icecast.xml"]

@@ -1,0 +1,7 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:buster
+
+RUN apt-get install -y libmp3lame0 libtwolame0 darkice
+
+COPY darkice.cfg /darkice_config/darkice.cfg
+
+RUN ["darkice", "-c", "/darkice_config/darkice.cfg"]

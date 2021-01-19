@@ -1,0 +1,38 @@
+version: '2.1'
+volumes:
+  darkice_config:
+  icecast_config:
+services:
+  darkice:
+    build: ./darkice
+    privileged: true
+    volumes:
+      - 'darkice_config:/darkice_config'
+    environment:
+      DURATION: 0
+      BUFFER_SECS: 1
+      RECONNECT: yes
+      DEVICE: plughw:1,0
+      SAMPLE_RATE: 44100
+      BITS_PER_SAMPLE: 16
+      CHANNEL: 2
+      BITRATE_MODE: cbr
+      FORMAT: mp3
+      BITRATE: 320
+      SERVER: icecast
+      PORT: 8088
+      PASSWORD: balena
+      MOUNT_POINT: balena.mp3
+      NAME: balenaPhonoCast
+    network_mode: host
+    labels:
+      io.balena.features.dbus: '1'
+  icecast:
+    build: ./icecast
+    privileged: true
+    volumes:
+      - 'icecast_config:/icecast_config'
+    environment:
+    network_mode: host
+    ports:
+      - '8088:8088'
